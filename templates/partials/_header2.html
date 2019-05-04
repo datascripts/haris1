@@ -1,0 +1,78 @@
+{% load static %}
+
+<!-- Header -->
+	<header>
+
+		<!-- Nav -->
+		<nav id="nav" class="navbar">
+			<div class="container">
+
+				<div class="navbar-header">
+					<!-- Logo -->
+					<div class="navbar-brand">
+						<a href="index.html">
+							<img class="logo" src="{% static 'img/logo-alt1.png' %}" alt="logo">
+						</a>
+					</div>
+					<!-- /Logo -->
+
+					<!-- Collapse nav button -->
+					<div class="nav-collapse">
+						<span></span>
+					</div>
+					<!-- /Collapse nav button -->
+				</div>
+
+				<!--  Main navigation  -->
+				<ul class="main-nav nav navbar-nav navbar-right">
+					<li><a href="{% url 'index' %}#home">Home</a></li>
+					<li><a href="{% url 'index' %}#about">About</a></li>
+					<li><a href="{% url 'index' %}#portfolio">Portfolio</a></li>
+					<li><a href="{% url 'index' %}#service">Services</a></li>
+					<li><a href="{% url 'index' %}#pricing">Prices</a></li>
+					<li><a href="{% url 'index' %}#team">Team</a></li>
+					<li><a href="{% url 'index' %}#contact">Contact</a></li>
+				{% if user.is_authenticated %}
+					<li>
+					<a class="nav-link" href="{% url 'dashboard' %}">{{user.username}} | Dashboard</a>
+					</li>
+					<li class="nav-item mr-3">
+						<a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
+							<i class="fas fa-sign-out-alt"></i> Logout
+						</a>
+						<form action="{% url 'logout' %}" method="POST" id="logout">{% csrf_token %}
+							<input type="hidden">
+						</form>
+					</li>
+				{% else %}
+				<li {% if 'login' in request.path %}
+						class="nav-item active mr-3"
+					{% else %}
+						class="nav-item mr-3"
+					{% endif %}>
+						<a href="#login" data-toggle="modal" data-target="#myModal">Login</a>
+				</li>
+				<li {% if 'register' in request.path %}
+						class="nav-item active mr-3"
+					{% else %}
+						class="nav-item mr-3"
+					{% endif %}>
+					<a href="#register" data-toggle="modal" data-target="#myModal2">Register</a>
+					</li>
+					{% endif %}
+					</ul>
+				<!-- /Main navigation -->
+
+			</div>
+		</nav>
+		<!-- /Nav -->
+<!-- Alerts -->
+{% include 'partials/_alerts.html' %}
+
+	<!--login-->
+	{% include 'accounts/login.html' %}
+	<!--register-->
+	{% include 'accounts/register.html'%}
+
+	</header>
+	<!-- /Header -->
